@@ -17,8 +17,8 @@ app.get('/', (req, res) => res.send('Minecraft AFK 挂机容器正在运行中..
 app.listen(PORT, '0.0.0.0', () => console.log(`网页服务已成功绑定端口: ${PORT}`));
 
 const botOptions = {
-    host: 'eu16-free.falixserver.net', 
-    port: 28907,     
+    host: 'qawqaw.falixsrv.me', 
+    port: 25618,     
     username: 'Container_Bot', 
     version: '1.21.11'  
 };
