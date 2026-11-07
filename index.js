@@ -15,8 +15,8 @@ app.listen(PORT, () => {
 
 // 2. Minecraft 机器人配置（优先读取环境变量，保护隐私）
 const botOptions = {
-    host: process.env.MC_HOST || 'qqqqw.falixsrv.me', 
-    port: parseInt(process.env.MC_PORT) || 25565,     
+    host: process.env.MC_HOST || 'eu16-free.falixserver.net', 
+    port: parseInt(process.env.MC_PORT) || 28907,     
     username: process.env.MC_USER || 'Container_Bot', 
     version: process.env.MC_VERSION || '1.21.1'       
 };
