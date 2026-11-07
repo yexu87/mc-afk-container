@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "mineflayer": "^4.22.0"
+    "minecraft-data": "latest",
+    "mineflayer": "latest"
   }
 }
