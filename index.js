@@ -3,13 +3,23 @@ const mineflayer = require('mineflayer');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// 【核心修改 1】如果最新库依然报错，这行垫片代码会强制让 mineflayer 用 1.21.4 的解析器去兼容服务器的 1.21.11，防止本地抛出不支持的异常
+const mcData = require('minecraft-data');
+if (!mcData.versionsByMinecraftVersion.pc['1.21.11']) {
+    const v1214 = mcData.versionsByMinecraftVersion.pc['1.21.4'];
+    if (v1214) {
+        mcData.versionsByMinecraftVersion.pc['1.21.11'] = v1214;
+        mcData.supportedVersions.pc.push('1.21.11');
+    }
+}
+
 app.get('/', (req, res) => res.send('Minecraft AFK 挂机容器正在运行中...'));
 app.listen(PORT, '0.0.0.0', () => console.log(`网页服务已成功绑定端口: ${PORT}`));
 
 const botOptions = {
     host: 'eu16-free.falixserver.net', 
     port: 28907,     
-    username: 'Container_Bot', // 匹配你日志中成功的名字
+    username: 'Container_Bot', 
     version: '1.21.11'  
 };
 
@@ -20,11 +30,9 @@ function startBot() {
     bot.on('spawn', () => {
         console.log(`[成功] 机器人 ${bot.username} 已成功进入服务器。已切换为静默保活模式。`);
         
-        // 【核心修改】删除引发反作弊的 jump 跳跃动作！
-        // 改为每 30 秒只在聊天栏悄悄发一条控制台看不到的微型包（或者干脆什么都不做，mineflayer 默认自带心跳机制）
+        // 每 30 秒静默微调视角，发送合法的微小动作包，规避反作弊并且绝不消耗服务器内存
         setInterval(() => {
             if (bot.entity) {
-                // 原地看一眼脚下，确保发送一个极其微小且合法的合法移动数据包，防止闲置被踢即可
                 bot.look(bot.entity.yaw, bot.entity.pitch, true);
             }
         }, 30000);
